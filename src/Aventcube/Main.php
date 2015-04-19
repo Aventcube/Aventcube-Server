@@ -390,13 +390,25 @@ if ($this->login[$player]<2){
 $event->setCancelled(true);
 }
 $loc = $event->getPlayer()->getX().":".$event->getPlayer()->getY().":".$event->getPlayer()->getZ().":".$event->getPlayer()->getLevel()->getName();
-if (isset($this->warpstp["warpstp"][$loc])){
+if (isset($this->warpstp["warpstp"][$loc]) && $this->login[$player]=2){
 	$name = $this->warpstp["warpstp"][$loc]["name"];
-	$leveel = $event->getPlayer()
+	$leveel = $event->getPlayer()->getLevel()->getName();
+	$x = $this->warps["warps"][$name]["x"];
+	$y = $this->warps["warps"][$name]["y"];
+	$z = $this->warps["warps"][$name]["z"];
+	$level = $this->warps["warps"][$name]["level"];
+	if ($leveel == $level){
+		$event->getPlayer()->getServer->teleport(new Vector3($x,$y,$z));
+	}else{
+	if ($event->getPlayer()->getServer()->getLevelByName($level)->loadLevel() == true){
+	$event->getPlayer()->getServer->teleport($event->getPlayer()->getServer->getLevelByName($level)->getSafeSpawn());
+	$event->getPlayer()->getServer->teleport(new Vector3($x,$y,$z));	
+	}else{$event->getPlayer()->sendMessage("[ERROR] You can be teleport to this warp.");}	
 }
 
 
 
+}
 }
 
 public function removeItem($sender, $getitem){
