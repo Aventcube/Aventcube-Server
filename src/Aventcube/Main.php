@@ -65,6 +65,7 @@ $this->shopfile = new Config( $this->getDataFolder() . "Shop.yml", Config::YAML)
 $this->sellfile = new Config( $this->getDataFolder() . "Sell.yml", Config::YAML);
 $this->itemlistfile = new Config( $this->getDataFolder() . "Itemlist.yml", Config::YAML);
 $this->warpsfile = new Config( $this->getDataFolder() . "Warps.yml", Config::YAML);
+$this->warpstpfile = new Config( $this->getDataFolder() . "WarpsTp.yml", Config::YAML);
 
 		$this->money = $this->moneyfile->getAll();
 		$this->rankshop = $this->rankshopfile->getAll();
@@ -76,6 +77,7 @@ $this->warpsfile = new Config( $this->getDataFolder() . "Warps.yml", Config::YAM
 		$this->sell = $this->sellfile->getAll();
 $this->itemlist = $this->itemlistfile->getAll();
 $this->warps = $this->warpsfile->getAll();
+$this->warpstp = $this->warpstpfile->getAll();
 }
 public function onDisable(){
 $this->savee();
@@ -89,7 +91,8 @@ $data = [
   "Ranks" => $this->ranks,
   "Shop" => $this->shop,
   "Sell" => $this->sell,
-  "Warps" => $this->warps
+  "Warps" => $this->warps,
+  "WarpsTp" => $this->warpstp
 ];
 if(!is_dir($this->getDataFolder())) {
   mkdir($this->getDataFolder());
@@ -133,7 +136,7 @@ case "setwarp":
 		$this->warps["warps"][strtolower($args[0])]["y"] = $y;
 		$this->warps["warps"][strtolower($args[0])]["z"] = $z;
 		$this->warps["warps"][strtolower($args[0])]["level"] = $level;
-		$sender->sendMessage("[Warps] Warp .".$args[0]." created.");
+		$sender->sendMessage("[Warps] Warp ".$args[0]." created.");
 	}else{$sender->sendMessage("Usage : /setwarp <name>");}
 	return true;
 	break;
@@ -146,6 +149,24 @@ case "tpw":
 			}else{$sender->sendMessage("[ERROR] You can not be teleport in this world");}
 		}else{$sender->sendMessage("Usage : /tpw <worldname>");}
 	}
+	return true;
+	break;
+
+case "setwarptp":
+	if ($sender->isOp){
+		if (isset($args[0]) && !is_numeric($args[0])){
+			if (isset($this->warps["warps"][strtolower($args[0])])){
+				$x = $sender->getX();
+		                $y = $sender->getY();
+		                $z = $sender-> getZ();
+		                $level = $sender->getLevel()->getName();
+		                $this->warpstp["warpstp"][$x.":".$y.":".$z.":".$level]["name"] = strtolower($args[0]);
+		                $sender->sendMessage("[WarpsTP] Hub to the warp ".$args[0]." created.");
+			}else{$sender->sendMessage("[ERROR] This warp doesn't exist !");}
+		}else{$sender->sendMessage("Usage : /setwarptp <warpname>");}
+	}
+return true;
+break;
 }
 }
 
@@ -367,6 +388,11 @@ public function onPlayerMove(PlayerMoveEvent $event){
 $player = $event->getPlayer()->getName();
 if ($this->login[$player]<2){
 $event->setCancelled(true);
+}
+$loc = $event->getPlayer()->getX().":".$event->getPlayer()->getY().":".$event->getPlayer()->getZ().":".$event->getPlayer()->getLevel()->getName();
+if (isset($this->warpstp["warpstp"][$loc])){
+	$name = $this->warpstp["warpstp"][$loc]["name"];
+	$leveel = $event->getPlayer()
 }
 
 
