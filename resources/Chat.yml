@@ -1,0 +1,10 @@
+--- 
+chat:
+  admin: §f[§4ADMIN§f] <§e{PLAYER}§f> §a{MESSAGE}
+  modo: §f[§1MODO§f] <§e{PLAYER}§f> §a{MESSAGE}
+  builder: §f[§dBUILDER§f] <§e{PLAYER}§f> §a{MESSAGE}
+  player: §f[§7PLAYER§f] <{PLAYER}> {MESSAGE}
+  vip: §f[§eVIP§f] <{PLAYER}> {MESSAGE}
+  elite: §f[§bELITE§f] <{PLAYER}> {MESSAGE}
+  legende: §f[§2LEGENDE§f] <{PLAYER}> {MESSAGE}
+...
