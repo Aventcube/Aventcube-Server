@@ -156,9 +156,9 @@ case "setwarptp":
 	if ($sender->isOp){
 		if (isset($args[0]) && !is_numeric($args[0])){
 			if (isset($this->warps["warps"][strtolower($args[0])])){
-				$x = $sender->getX();
-		                $y = $sender->getY();
-		                $z = $sender-> getZ();
+				$x = round($sender->getX());
+		                $y = round($sender->getY());
+		                $z = round($sender-> getZ());
 		                $level = $sender->getLevel()->getName();
 		                $this->warpstp["warpstp"][$x.":".$y.":".$z.":".$level]["name"] = strtolower($args[0]);
 		                $sender->sendMessage("[WarpsTP] Hub to the warp ".$args[0]." created.");
@@ -389,7 +389,7 @@ $player = $event->getPlayer()->getName();
 if ($this->login[$player]<2){
 $event->setCancelled(true);
 }
-$loc = $event->getPlayer()->getX().":".$event->getPlayer()->getY().":".$event->getPlayer()->getZ().":".$event->getPlayer()->getLevel()->getName();
+$loc = round($event->getPlayer()->getX()).":".round($event->getPlayer()->getY()).":".round($event->getPlayer()->getZ()).":".$event->getPlayer()->getLevel()->getName();
 if (isset($this->warpstp["warpstp"][$loc]) && $this->login[$player]=2){
 	$name = $this->warpstp["warpstp"][$loc]["name"];
 	$leveel = $event->getPlayer()->getLevel()->getName();
@@ -400,10 +400,10 @@ if (isset($this->warpstp["warpstp"][$loc]) && $this->login[$player]=2){
 	if ($leveel == $level){
 		$event->getPlayer()->getServer->teleport(new Vector3($x,$y,$z));
 	}else{
-	if ($event->getPlayer()->getServer()->getLevelByName($level)->loadLevel() == true){
+	$event->getPlayer()->getServer()->getLevelByName($level)->loadLevel();
 	$event->getPlayer()->getServer->teleport($event->getPlayer()->getServer->getLevelByName($level)->getSafeSpawn());
 	$event->getPlayer()->getServer->teleport(new Vector3($x,$y,$z));	
-	}else{$event->getPlayer()->sendMessage("[ERROR] You can be teleport to this warp.");}	
+
 }
 
 
