@@ -129,14 +129,23 @@ case "setwarp":
 		$y = $sender->getY();
 		$z = $sender-> getZ();
 		$level = $sender->getLevel()->getName();
-		$this->warps["warps"][$args[0]]["x"] = $x;
-		$this->warps["warps"][$args[0]]["y"] = $y;
-		$this->warps["warps"][$args[0]]["z"] = $z;
-		$this->warps["warps"][$args[0]]["level"] = $level;
+		$this->warps["warps"][strtolower($args[0])]["x"] = $x;
+		$this->warps["warps"][strtolower($args[0])]["y"] = $y;
+		$this->warps["warps"][strtolower($args[0])]["z"] = $z;
+		$this->warps["warps"][strtolower($args[0])]["level"] = $level;
 		$sender->sendMessage("[Warps] Warp .".$args[0]." created.");
 	}else{$sender->sendMessage("Usage : /setwarp <name>");}
 	return true;
 	break;
+
+case "tpw":
+	if ($sender->isOp){
+		if (isset($args[0]) && !is_numeric($args[0])){
+			if ($sender->getServer()->getLevelByName($args[0])->loadLevel() == true){
+				$sender->getServer()->teleport($sender->getServer()->getLevelByName($args[0])->getSafeSpawn);
+			}else{$sender->sendMessage("[ERROR] You can not be teleport in this world");}
+		}else{$sender->sendMessage("Usage : /tpw <worldname>");}
+	}
 }
 }
 
