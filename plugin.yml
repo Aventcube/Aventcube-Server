@@ -17,3 +17,11 @@ commands:
    permission: asparanc.ac.setwarp
    description: "Create a new warp"
    default: op
+  tpw:
+   permission: asparanc.ac.tpw
+   description: "Teleport you in other world"
+   default: op
+  setwarptp:
+   permission: asparanc.ac.setwarptp
+   description: "Set the start point for a warp hub"
+   default: op
