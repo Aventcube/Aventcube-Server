@@ -64,6 +64,7 @@ $this->ranklistfile = new Config( $this->getDataFolder() . "Ranklist.yml", Confi
 $this->shopfile = new Config( $this->getDataFolder() . "Shop.yml", Config::YAML);
 $this->sellfile = new Config( $this->getDataFolder() . "Sell.yml", Config::YAML);
 $this->itemlistfile = new Config( $this->getDataFolder() . "Itemlist.yml", Config::YAML);
+$this->warpsfile = new Config( $this->getDataFolder() . "Warps.yml", Config::YAML);
 
 		$this->money = $this->moneyfile->getAll();
 		$this->rankshop = $this->rankshopfile->getAll();
@@ -74,6 +75,7 @@ $this->itemlistfile = new Config( $this->getDataFolder() . "Itemlist.yml", Confi
 		$this->shop = $this->shopfile->getAll();
 		$this->sell = $this->sellfile->getAll();
 $this->itemlist = $this->itemlistfile->getAll();
+$this->warps = $this->warpsfile->getAll();
 }
 public function onDisable(){
 $this->savee();
@@ -86,7 +88,8 @@ $data = [
   "Auth" => $this->auth,
   "Ranks" => $this->ranks,
   "Shop" => $this->shop,
-  "Sell" => $this->sell
+  "Sell" => $this->sell,
+  "Warps" => $this->warps
 ];
 if(!is_dir($this->getDataFolder())) {
   mkdir($this->getDataFolder());
@@ -119,6 +122,21 @@ $money = $this->money["money"][$player];
 $sender->sendMessage("[Wallet] §2You have ".$money."$");
 return true;
 break;
+
+case "setwarp":
+	if ($sender->isOp() && isset($args[0]) && !is_numeric($args[0])){
+		$x = $sender->getX();
+		$y = $sender->getY();
+		$z = $sender-> getZ();
+		$level = $sender->getLevel()->getName();
+		$this->warps["warps"][$args[0]]["x"] = $x;
+		$this->warps["warps"][$args[0]]["y"] = $y;
+		$this->warps["warps"][$args[0]]["z"] = $z;
+		$this->warps["warps"][$args[0]]["level"] = $level;
+		$sender->sendMessage("[Warps] Warp ."$args[0]." created.");
+	}else{$sender->sendMessage("Usage : /setwarp <name>");}
+	return true;
+	break;
 }
 }
 
