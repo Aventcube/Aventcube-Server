@@ -13,3 +13,7 @@ commands:
    permission: asparanc.ac.setrank
    description: "Set rank for a player"
    default: op
+  setwarp:
+   permission: asparanc.ac.setwarp
+   description: "Create a new warp"
+   default: op
