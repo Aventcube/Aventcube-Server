@@ -133,7 +133,7 @@ case "setwarp":
 		$this->warps["warps"][$args[0]]["y"] = $y;
 		$this->warps["warps"][$args[0]]["z"] = $z;
 		$this->warps["warps"][$args[0]]["level"] = $level;
-		$sender->sendMessage("[Warps] Warp ."$args[0]." created.");
+		$sender->sendMessage("[Warps] Warp .".$args[0]." created.");
 	}else{$sender->sendMessage("Usage : /setwarp <name>");}
 	return true;
 	break;
