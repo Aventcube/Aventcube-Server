@@ -1,0 +1,15 @@
+name: AventCube
+main: AventCube\Main
+version: 1.0.0
+api: [1.12.0]
+author: Asparanc
+description: "Main plugin for AventCube"
+commands:
+  wallet:
+   permission: asparanc.ac.wallet
+   description: "See your current money"
+   default: true
+  setrank:
+   permission: asparanc.ac.setrank
+   description: "Set rank for a player"
+   default: op
